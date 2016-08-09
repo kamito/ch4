@@ -3,7 +3,10 @@ import { describe, it, before, beforeEach, after, afterEach } from 'mocha';
 import assert from 'power-assert';
 import _ from 'lodash';
 
-import { createStore, destroyStore, getAllStores } from '../../src/core';
+import Logger from '../../src/logger';
+import { createStore, destroyStore, getAllStores, destroyAllStores } from '../../src/core';
+import Store from '../../src/store';
+
 
 describe("core", () => {
   describe("createStore", () => {
@@ -20,7 +23,7 @@ describe("core", () => {
         let allStoresAfter = getAllStores();
         assert.deepEqual(allStoresAfter, new Map([ [ 'spec', newStore ] ]));
 
-        destroyStore('spec');
+        destroyAllStores();
       });
     });
 
@@ -31,7 +34,7 @@ describe("core", () => {
         newStore = createStore('spec', initState);
       });
       after(() => {
-        destroyStore('spec');
+        destroyAllStores();
       });
 
       it("return exists store", () => {
@@ -45,6 +48,22 @@ describe("core", () => {
         assert.deepEqual(allStores, new Map([ [ 'spec', newStore ]  ]));
       });
     });
+
+    describe("If store is original class", () => {
+      it("return my store", () => {
+        class MyStore extends Store {
+          get myName() {
+            return "Tarou";
+          }
+        };
+        let initState = { test: "spec" };
+        let newStore = createStore('spec', initState, MyStore);
+        assert(newStore.name === 'spec');
+        assert(newStore.myName === 'Tarou');
+
+        destroyAllStores();
+      });
+    });
   });
 
   describe("getAllStores", () => {
@@ -56,8 +75,7 @@ describe("core", () => {
         let newStore3 = createStore('spec1', initState);
       });
       after(() => {
-        destroyStore('spec1');
-        destroyStore('spec2');
+        destroyAllStores();
       });
 
       it("return exists stores", () => {
