@@ -2,7 +2,8 @@
   "presets": [ "es2015", "stage-0", "react"],
   "env": {
     "development": {
-      "presets": [ "power-assert" ]
+      "presets": [ "power-assert" ],
+      "plugins": [ "babel-plugin-espower" ]
     }
   }
 }
