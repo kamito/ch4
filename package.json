@@ -2,10 +2,11 @@
   "name": "ch4",
   "version": "0.0.1",
   "description": "CH4",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "mocha --opts ./spec/mocha.opts ./spec",
-    "spec": "mocha --opts ./spec/mocha.opts"
+    "spec": "mocha --opts ./spec/mocha.opts",
+    "build": "babel src --out-dir lib --source-maps-inline"
   },
   "repository": {
     "type": "git",
