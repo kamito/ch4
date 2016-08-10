@@ -85,6 +85,16 @@ export default class Store {
   }
 
   /**
+   * @param {function} callback Callback function
+   */
+  disconnect(...callbacks) {
+    callbacks = _.flatten(_.castArray(callbacks));
+    this.connectors__ = _.reject(this.connectors__, (conn) => {
+      return (_.indexOf(callbacks, conn) >= 0);
+    });
+  }
+
+  /**
    * @param {string|array|object|Map} actionName Action name
    * @param {undefined|function|array} handlers Handlers
    */

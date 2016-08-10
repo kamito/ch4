@@ -1,11 +1,11 @@
 import { describe, it, before, beforeEach, after, afterEach } from 'mocha';
 import assert from 'power-assert';
 import _ from 'lodash';
+import sinon from 'sinon';
 
 import Logger from '../../src/logger';
 import { createStore, destroyAllStores } from '../../src/core';
 import dispatcher from '../../src/dispatcher';
-import Store from '../../src/store';
 
 describe("store", () => {
   describe("on", () => {
@@ -161,6 +161,31 @@ describe("store", () => {
         dispatcher.trigger('spec/toUndefined');
       });
 
+    });
+  });
+
+  describe("disconnect", () => {
+    let store = null;
+    let initState = { test: "test" };
+    before(() => {
+      store = createStore('spec', initState);
+    });
+    after(() => {
+      destroyAllStores();
+    });
+
+    it("not call disconnected function", () => {
+      let spy = sinon.spy();
+      store.connect(spy);
+      store.on('spec', (store_, ...args) => {
+        return { test: args[0] };
+      });
+      dispatcher.trigger('spec', 'test1');
+      assert(spy.calledOnce);
+      // disconnect
+      store.disconnect(spy);
+      dispatcher.trigger('spec', 'test2');
+      assert(spy.calledOnce);
     });
   });
 });
