@@ -32,10 +32,20 @@ export default class Container extends React.Component {
   getStores() {
     return this.props.stores;
   }
+
+  /**
+   * render
+   * @return {React.Element}
+   */
+  render() {
+    let state = this.state;
+    return React.cloneElement(this.props.children, { ...state });
+  }
 }
 
 Container.propTypes = {
-  stores: React.PropTypes.array
+  stores: React.PropTypes.array,
+  children: React.ProtoTypes.element
 };
 Container.defaultProps = {
   stores: []
