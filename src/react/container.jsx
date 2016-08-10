@@ -5,7 +5,7 @@ import _ from 'lodash';
 export default class Container extends React.Component {
 
   /**
-   * @overflow
+   * @override
    */
   componentWillMount() {
     let state = {};
@@ -15,6 +15,16 @@ export default class Container extends React.Component {
       state[store.name] = store.allState;
     });
     this.setState(state);
+  }
+
+  /**
+   * @override
+   */
+  componentWillUnmount() {
+    let stores = this.props.stores;
+    _.forEach(stores, (store) => {
+      store.disconnect(this.updateState.bind(this));
+    });
   }
 
   /**
