@@ -35,7 +35,7 @@ export function registCastHandlers(actionName, handlers) {
  * @param {array} handlers Handlers array.
  */
 export function registAddHandlers(map, actionName, handlers) {
-  handlers = (_.isArray(handlers)) ? _.flattenDeep(handlers) : [];
+  handlers = (_.isArray(handlers)) ? _.flattenDeep(handlers) : (_.isFunction(handlers)) ? [handlers] : [];
   handlers = _.filter(handlers, (f) => { return _.isFunction(f); });
   if (map.has(actionName)) {
     let entries = map.get(actionName);
