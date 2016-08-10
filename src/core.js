@@ -77,11 +77,6 @@ export function trigger(actionName, ...args) {
   dispatcher.trigger(actionName, ...args);
 }
 
-
-export function subscribe() {
-
-}
-
 /**
  * Regist a action.
  * Action is ignited by function `trigger`.
