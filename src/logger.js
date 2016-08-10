@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * CH4
  * @author Shinichirow KAMITO

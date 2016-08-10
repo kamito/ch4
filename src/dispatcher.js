@@ -68,7 +68,7 @@ export class Dispatcher extends EventEmitter {
   addAction(actionMap) {
     if (_.isMap(actionMap)) {
       let m = this.actionMap__;
-      actionMap.forEach((handlers, actionName, map) => {
+      actionMap.forEach((handlers, actionName) => {
         if (m.has(actionName)) {
           let handlers_ = m.get(actionName);
           handlers_ = handlers_.concat(handlers);

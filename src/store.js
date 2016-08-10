@@ -92,7 +92,7 @@ export default class Store {
     let actionMap = registCastHandlers(actionName, handlers);
     if (_.isMap(actionMap)) {
       let m = this.handleMap__;
-      actionMap.forEach((handlers, actionName, map) => {
+      actionMap.forEach((handlers, actionName) => {
         if (m.has(actionName)) {
           let handlers_ = m.get(actionName);
           handlers_ = handlers_.concat(handlers);
@@ -142,8 +142,7 @@ export default class Store {
     let isChanged = false;
     let handlers = this.handleMap__.get(actionName);
     if (handlers) {
-      let newState = {};
-      let returns = _.map(handlers, (handler) => {
+      _.map(handlers, (handler) => {
         let diffState = handler(this, ...event.results);
         if (_.isObject(diffState)) {
           this.state__ = this.__assignState(this.state__, diffState);

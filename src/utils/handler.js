@@ -1,6 +1,5 @@
 
 import _ from 'lodash';
-import Logger from '../logger';
 
 
 export function registCastHandlers(actionName, handlers) {
