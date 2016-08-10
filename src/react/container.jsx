@@ -11,7 +11,7 @@ export default class Container extends React.Component {
     let state = {};
     let stores = this.props.stores;
     _.forEach(stores, (store) => {
-      store.connect(this.updateStore.bind(this));
+      store.connect(this.updateState.bind(this));
       state[store.name] = store.allState;
     });
     this.setState(state);
