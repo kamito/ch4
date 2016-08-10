@@ -47,12 +47,41 @@ export default class Store {
   }
 
   /**
+   * Set value.
+   * And update state event to connector.
+   * @param {string|object} path Data path
+   * @param {any|function} value Value
+   * @param {undefined|function}
+   * @return {Store}
+   */
+  set(path, value=null, customizer=undefined) {
+    if (_.isObject(path)) {
+      this.state__ = this.__assignState(this.state__, path);
+      this.__update();
+    } else if (_.isString(path)) {
+      if (_.isFunction(customizer)) {
+        this.state__ = _.setWith(this.state__, path, value, customizer);
+      } else {
+        this.state__ = _.set(this.state__, path, value);
+      }
+      this.__update();
+    }
+  }
+
+  /**
    * @param {function} callback Callback function
    */
-  connect(callback) {
-    if (_.indexOf(this.connectors__, callback) < 0) {
-      this.connectors__.push(callback);
-    }
+  connect(...callbacks) {
+    callbacks = _.flatten(_.castArray(callbacks));
+    _.forEach(callbacks, (callback) => {
+      if (_.isFunction(callback)) {
+        if (_.indexOf(this.connectors__, callback) < 0) {
+          this.connectors__.push(callback);
+        }
+      } else {
+        Logger.warn("Connect argument require `function`.");
+      }
+    });
   }
 
   /**
@@ -102,6 +131,12 @@ export default class Store {
     });
   }
 
+  /**
+   * @param {object} event Event object
+   * @param {string} event.type Event type
+   * @param {array} event.results Results that action returns values;
+   * @param {Error} event.error Error that raised from action.
+   */
   handleEvent__(event) {
     let actionName = event.type;
     let isChanged = false;
@@ -118,16 +153,26 @@ export default class Store {
     }
 
     if (isChanged) {
-      if (_.isArray(this.connectors__) && !_.isEmpty(this.connectors__)) {
-        _.forEach(this.connectors__, (conn) => {
-          conn(this);
-        });
-      }
+      this.__update();
     }
   }
 
+  /**
+   * @private
+   */
   __assignState(currentState, diffState) {
     currentState = _.defaultsDeep(diffState, currentState);
     return currentState;
+  }
+
+  /**
+   * @private
+   */
+  __update() {
+    if (_.isArray(this.connectors__) && !_.isEmpty(this.connectors__)) {
+      _.forEach(this.connectors__, (conn) => {
+        conn(this);
+      });
+    }
   }
 }
