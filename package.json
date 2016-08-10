@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "CH4",
   "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test": "mocha --opts ./spec/mocha.opts ./spec",
     "spec": "mocha --opts ./spec/mocha.opts",
