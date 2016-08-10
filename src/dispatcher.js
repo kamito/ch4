@@ -21,29 +21,6 @@ export class Dispatcher extends EventEmitter {
     this.actionMap__ = new Map();
   }
 
-  registAction(actionName, ...handlers) {
-    let actionMap = registCastHandlers(actionName, handlers);
-    return this.addAction(actionMap);
-  }
-
-  addAction(actionMap) {
-    if (_.isMap(actionMap)) {
-      let m = this.actionMap__;
-      actionMap.forEach((handlers, actionName, map) => {
-        if (m.has(actionName)) {
-          let handlers_ = m.get(actionName);
-          handlers_ = handlers_.concat(handlers);
-          m.set(actionName, handlers_);
-        } else {
-          m.set(actionName, handlers);
-        }
-      });
-      this.actionMap__ = m;
-    } else {
-      Logger.warn("Dispatcher action is require `Map` object.");
-    }
-    return this;
-  }
 
   /**
    * @param {string} actionName Action name.
@@ -80,6 +57,35 @@ export class Dispatcher extends EventEmitter {
   }
 
   /**
+   * @param {string|object|array} actionName Action name
+   * @param {function|function[]|undefined} handlers Handler functions.
+   */
+  registAction(actionName, ...handlers) {
+    let actionMap = registCastHandlers(actionName, handlers);
+    return this.addAction(actionMap);
+  }
+
+  addAction(actionMap) {
+    if (_.isMap(actionMap)) {
+      let m = this.actionMap__;
+      actionMap.forEach((handlers, actionName, map) => {
+        if (m.has(actionName)) {
+          let handlers_ = m.get(actionName);
+          handlers_ = handlers_.concat(handlers);
+          m.set(actionName, handlers_);
+        } else {
+          m.set(actionName, handlers);
+        }
+      });
+      this.actionMap__ = m;
+    } else {
+      Logger.warn("Dispatcher action is require `Map` object.");
+    }
+    return this;
+  }
+
+  /**
+   * Dispatch action
    * @param {string} actionName Action name.
    * @param {array} args Action arguments.
    * @return {Dispatcher}
@@ -99,6 +105,7 @@ export class Dispatcher extends EventEmitter {
           }
         });
       } catch (err) {
+        Logger.error(err);
         error = err;
       }
 
