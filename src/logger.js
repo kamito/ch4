@@ -50,7 +50,7 @@ export class Logger {
   }
 }
 
-let logger = new Logger();
+const logger = new Logger();
 
 export default {
   setLevel: (level) => { logger.setLevel(level); },

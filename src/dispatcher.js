@@ -165,5 +165,5 @@ export class Dispatcher extends EventEmitter {
 }
 
 
-let dispatcher = new Dispatcher();
+const dispatcher = new Dispatcher();
 export default dispatcher;
