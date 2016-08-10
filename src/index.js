@@ -17,6 +17,7 @@ import {
   regist
 } from './core';
 import dispatcher from './dispatcher';
+import logger from './logger';
 
 let ch4 = {
   createStore: createStore,
@@ -25,7 +26,8 @@ let ch4 = {
   destroyAllStores: destroyAllStores,
   trigger: trigger,
   regist: regist,
-  dispatcher: dispatcher
+  dispatcher: dispatcher,
+  logger: logger
 };
 
 export {
@@ -35,6 +37,7 @@ export {
   destroyAllStores,
   trigger,
   regist,
-  dispatcher
+  dispatcher,
+  logger
 }
 export default ch4;
