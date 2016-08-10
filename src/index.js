@@ -19,7 +19,13 @@ import {
 import dispatcher from './dispatcher';
 import logger from './logger';
 
-let ch4 = {
+import Container from './react/container';
+
+const reactUtils = {
+  Container: Container
+};
+
+const ch4 = {
   createStore: createStore,
   getAllStores: getAllStores,
   destroyStore: destroyStore,
@@ -27,7 +33,8 @@ let ch4 = {
   trigger: trigger,
   regist: regist,
   dispatcher: dispatcher,
-  logger: logger
+  logger: logger,
+  reactUtils: reactUtils
 };
 
 export {
@@ -38,6 +45,7 @@ export {
   trigger,
   regist,
   dispatcher,
-  logger
+  logger,
+  reactUtils
 }
 export default ch4;
