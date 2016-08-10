@@ -9,7 +9,8 @@
   "scripts": {
     "test": "mocha --opts ./spec/mocha.opts ./spec",
     "spec": "mocha --opts ./spec/mocha.opts",
-    "build": "babel src --out-dir lib --source-maps-inline"
+    "build": "babel src --out-dir lib --source-maps-inline",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
