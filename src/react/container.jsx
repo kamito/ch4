@@ -45,7 +45,7 @@ export default class Container extends React.Component {
 
 Container.propTypes = {
   stores: React.PropTypes.array,
-  children: React.ProtoTypes.element
+  children: React.PropTypes.element
 };
 Container.defaultProps = {
   stores: []
