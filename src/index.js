@@ -8,14 +8,33 @@
  * @author Shinichirow KAMITO
  * @license MIT
  */
-import { createStore, trigger, subscribe, regist } from './core';
+import {
+  createStore,
+  destroyStore,
+  getAllStores,
+  destroyAllStores,
+  trigger,
+  regist
+} from './core';
+import dispatcher from './dispatcher';
 
 let ch4 = {
-  createStire: createStore,
+  createStore: createStore,
+  getAllStores: getAllStores,
+  destroyStore: destroyStore,
+  destroyAllStores: destroyAllStores,
   trigger: trigger,
-  subscribe: subscribe,
-  regist: regist
+  regist: regist,
+  dispatcher: dispatcher
 };
 
-export { createStore, trigger, subscribe, regist }
+export {
+  createStore,
+  destroyStore,
+  getAllStores,
+  destroyAllStores,
+  trigger,
+  regist,
+  dispatcher
+}
 export default ch4;
