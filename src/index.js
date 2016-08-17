@@ -16,6 +16,7 @@ import {
   trigger,
   regist
 } from './core';
+import Store from './store';
 import dispatcher from './dispatcher';
 import logger from './logger';
 
@@ -33,6 +34,7 @@ const ch4 = {
   trigger: trigger,
   regist: regist,
   dispatcher: dispatcher,
+  Store: Store,
   logger: logger,
   reactUtils: reactUtils
 };
@@ -45,6 +47,7 @@ export {
   trigger,
   regist,
   dispatcher,
+  Store,
   logger,
   reactUtils
 }
