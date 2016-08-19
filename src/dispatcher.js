@@ -142,6 +142,7 @@ export class Dispatcher extends EventEmitter {
 
     return Promise.all(promiseAll)
       .then((results) => {
+        results = _.flatten(results);
         this.afterAction(error, results, actionName);
       })
       .catch((error) => {
